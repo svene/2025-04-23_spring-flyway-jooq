@@ -2,8 +2,8 @@ package db.callback;
 
 import lombok.extern.slf4j.Slf4j;
 import org.flywaydb.core.api.callback.Callback;
-import org.flywaydb.core.api.callback.Event;
 import org.flywaydb.core.api.callback.Context;
+import org.flywaydb.core.api.callback.Event;
 
 @Slf4j
 public class AfterMigrateCallback implements Callback {
