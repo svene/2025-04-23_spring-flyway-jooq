@@ -1,0 +1,21 @@
+== Development
+
+From IntelliJ:
+
+- From IntelliJ start class
+src/test/java/org/svenehrke/demo/springflywayjooq/TestSpringFlywayJooqDemoApplication.java
+
+- Setup a DB connection with the properties:
+----
+- host: localhost
+- port: 5432
+- user: postgres
+- password: postgres
+- JDBC-URL: jdbc:postgresql://localhost:5432/test
+----
+
+In the IntelliJ DB window open schema "test" and checkout public/tables underneath it.
+There should be the following tables:
+- flyway_schema_history
+- person
+
