@@ -5,7 +5,9 @@ import org.flywaydb.core.api.callback.Callback;
 import org.flywaydb.core.api.callback.Context;
 import org.flywaydb.core.api.callback.Event;
 
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 @Slf4j
 public class BeforeMigrateCallback implements Callback {
@@ -23,8 +25,13 @@ public class BeforeMigrateCallback implements Callback {
 	public void handle(Event event, Context context) {
 		try (Statement stmt = context.getConnection().createStatement()) {
 			log.info("🧹 Truncating tables before migration...");
-			stmt.execute("DROP TABLE IF EXISTS PERSON;");
-		} catch (Exception e) {
+			stmt.execute("TRUNCATE TABLE flyway_schema_history;");
+			List<String> tables = List.of("person");
+			for (String table : tables) {
+				stmt.execute("DROP TABLE IF EXISTS %s;".formatted(table));
+			}
+			context.getConnection().commit();
+		} catch (SQLException e) {
 			throw new RuntimeException("Failed to truncate tables before migration", e);
 		}
 		log.info("===== BeforeMigrateCallback.handle");
